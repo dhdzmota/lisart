@@ -1,0 +1,16 @@
+﻿instrumento_id,nombre,familia,code,descripcion,activo
+ACORDEON,Acordeón,viento,ACO,"Clases de acordeón dirigidas a quienes desean aprender este instrumento de viento y teclado, explorando repertorio tradicional y contemporáneo.",true
+BATERIA,Batería,percusion,BAT,"Taller de batería enfocado en técnica, coordinación y estilos variados, desde rock hasta música latina.",true
+CANTO,Canto,voz,CAN,"Clases de canto para trabajar respiración, afinación, proyección de la voz y repertorio vocal diverso.",true
+CELLO,Cello,cuerda,CEL,"Curso de violoncello, con enfoque en técnica clásica y repertorio solista o de ensamble.",true
+ESTIMULACION-MUSICAL-TEM,Estimulación Musical Temprana,iniciacion,EMT,"Estimulación musical temprana pensada para bebés y niños pequeños, con juegos sonoros que favorecen el desarrollo auditivo y motriz.",true
+GUITARRA-ACUSTICA,Guitarra Acústica,cuerda,GA,Taller de guitarra acústica que abarca desde acordes básicos hasta repertorio de acompañamiento y solista.,true
+GUITARRA-ELECTRICA,Guitarra Eléctrica,cuerda,GE,"Clases de guitarra eléctrica, orientadas a estilos como rock, blues, funk y metal, incluyendo improvisación y efectos.",true
+INICIACION-MUSICA-INFANT,Iniciación Música Infantil,iniciacion,IMI,"Iniciación musical infantil, programa para que niños descubran el lenguaje musical mediante juegos, canto y percusión.",true
+JARANA,Jarana,cuerda,,,true
+NUESTRO-CUERPO-COMO-INST,Nuestro Cuerpo como Instrumento,iniciacion,NCC,"Centrado en la exploración rítmica, percusión corporal y expresión corporal",true
+PERCUSIONES,Percusiones,percusion,PER,"Curso de percusiones, explorando instrumentos de percusión latina, africana y contemporánea, con enfoque rítmico y de ensamble.",true
+PIANO,Piano,teclado,PIA,"Clases de piano, desde nivel inicial hasta avanzado, abarcando técnica, lectura y repertorio clásico y popular.",true
+SAXOFON,Saxofón,viento,SAX,"Curso de saxofón con técnica, respiración y repertorio de estilos como jazz, clásico y música popular.",true
+UKULELE,Ukulele,cuerda,UKU,"Taller de ukulele, ideal para principiantes, centrado en acordes, ritmos y canciones populares.",true
+VIOLIN,Violín,cuerda,VIO,"Clases de violín, con formación técnica progresiva, repertorio clásico.",true

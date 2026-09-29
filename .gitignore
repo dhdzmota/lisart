@@ -1,0 +1,61 @@
+# --- Datos -------------------------------------------------------------
+# Regla general: NINGUN dato sale del equipo. Contienen datos personales de
+# alumnos (muchos menores de edad): nombres, domicilios, telefonos, firmas.
+data/**
+!data/**/
+!data/**/.gitkeep
+
+# Excepcion: los catalogos NO contienen datos personales y si se versionan,
+# porque son configuracion de la escuela (salones, instrumentos, precios).
+!data/master/espacios.csv
+!data/master/instrumentos.csv
+!data/master/conceptos.csv
+# Precios y tipos de descuento (del Excel de la escuela). Sin ellos no se
+# puede reproducir la proyeccion de pago; tampoco llevan datos personales.
+!data/master/programas.csv
+!data/master/descuentos.csv
+
+# --- Secretos ----------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.key
+credentials*.json
+token*.json
+
+# --- Python ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- Editores ----------------------------------------------------------
+.idea/
+.vscode/
+.DS_Store
+
+# Configuracion local de Claude Code. La bitacora del proyecto
+# (.claude/estado-del-proyecto.md) SI se versiona: es contexto del equipo.
+.claude/settings.local.json
+
+# Configuracion local de Obsidian. El contenido del vault SI se versiona:
+# son notas de estructura, no llevan datos personales.
+.obsidian/
+
+# --- Material que no hace falta para replicar --------------------------
+# El notebook original: lo reemplazo `lisart ingest jotform`, y contiene la
+# llave de Jotform en claro y salidas con datos de alumnos.
+projects/
+# Ilustraciones PNG que la app ya no usa (los iconos son SVG, ver
+# ui/iconos.py). Pesan ~47 MB.
+assets/iconos/
+
+# --- Salidas de trabajo ------------------------------------------------
+*.xlsx
+*.zip

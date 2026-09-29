@@ -1,0 +1,49 @@
+[project]
+name = "lisart"
+version = "0.1.0"
+description = "Sistema administrativo de la escuela de musica Lisart"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+ui = [
+    "streamlit>=1.30",
+    "plotly>=5.18",
+    "networkx>=3.0",
+]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.4",
+]
+# Para regenerar el PDF de la guia (`lisart guia`). Chromium hace el paginado,
+# asi que no hace falta instalar LaTeX.
+docs = [
+    "markdown>=3.5",
+    "playwright>=1.40",
+]
+
+[project.scripts]
+lisart = "lisart.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lisart"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "ui: pruebas de la pantalla; corren la app completa y son lentas (~4 min)",
+]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

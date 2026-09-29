@@ -1,0 +1,11 @@
+﻿espacio_id,nombre,tipo,piso,agendable,capacidad,equipamiento,notas,activo
+AUDITORIO,Sala grande,auditorio,planta_alta,true,,,Espacio aparte del salón grande. Muchas veces se usa como auditorio.,true
+AULA-BATERIA,Salón de batería,aula,planta_alta,true,,Batería,Relativamente pequeño.,true
+AULA-CH-1,Salón pequeño 1,aula,planta_baja,true,,,Uno de los tres salones pequeños de planta baja.,true
+AULA-CH-2,Salón pequeño 2,aula,planta_baja,true,,,Uno de los tres salones pequeños de planta baja.,true
+AULA-CH-3,Salón pequeño 3,aula,planta_baja,true,,,Uno de los tres salones pequeños de planta baja.,true
+AULA-GRANDE,Salón grande,aula,planta_baja,true,,,El aula más grande de la escuela.,true
+AULA-MEDIANA,Salón mediano,aula,planta_alta,true,,,"Más grande que los pequeños de planta baja, más chico que el salón grande.",true
+BODEGA,Bodega,bodega,planta_alta,false,,,"Podría funcionar como salón, pero hoy no lo es. Si algún día se habilita, basta con poner agendable=true y tipo=aula.",true
+COCINA,Cocina,cocina,planta_baja,false,,,No se agenda para clase.,true
+RECEPCION,Recepción,recepcion,planta_baja,false,,,No se agenda para clase.,true

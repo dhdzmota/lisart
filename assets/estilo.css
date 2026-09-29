@@ -1,0 +1,482 @@
+/* ==========================================================================
+   Lisart · sistema de diseño de las pantallas internas
+
+   DIRECCIÓN: partitura impresa.
+
+   No papel crema ni gris corporativo: el mundo de esta escuela es la música
+   impresa —tinta negra sobre papel de partitura, líneas de pentagrama finas,
+   y las marcas en LÁPIZ ROJO con que un músico anota su partitura—. De ahí
+   sale cada decisión:
+
+   · El vino (#B33844 de la paleta de Lisart) es el lápiz rojo: marca el
+     registro actual y la acción de guardar. Es donde se interviene la hoja.
+   · El oro (#FDBB02) NO se reparte por la pantalla: vive en la banda de marca
+     y en el subrayado de la pestaña activa. Un bloque dorado grande grita;
+     una línea dorada señala.
+   · El negro de la banda es #000000 EXACTO, el mismo del archivo del logo,
+     para que el wordmark no se vea como un recuadro pegado encima.
+
+   TIPOGRAFÍA: Bodoni Moda para los títulos —la didona es la letra de los
+   programas de concierto y las portadas de disco, no una serif editorial
+   cualquiera—, IBM Plex Sans para la interfaz e IBM Plex Mono para todo lo
+   que se lee dígito por dígito: identificadores, teléfonos, fechas. Un ID en
+   monoespaciada se alinea y se compara de un vistazo; en proporcional, no.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: light;
+
+  --neg:        #000000;   /* banda de marca = fondo del logo */
+  --tinta:      #131211;   /* tinta de impresión */
+  --tinta-2:    #5A544E;
+  --tinta-3:    #948C84;
+  --papel:      #FCFBF8;   /* papel de partitura */
+  --superficie: #FFFFFF;
+  --regla:      #E6E1D8;   /* líneas de pentagrama, filetes */
+  --regla-2:    #F2EEE7;
+  --lapiz:      #B33844;   /* el lápiz rojo del músico */
+  --lapiz-h:    #8E2A34;
+  --lapiz-suave:#FBF0F1;
+  --oro:        #FDBB02;
+
+  --display: 'Bodoni Moda', 'Didot', 'Bodoni MT', Georgia, serif;
+  --ui:      'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --r: 3px;
+}
+
+/* --- Base ---------------------------------------------------------------- */
+
+html, body, .stApp, [class*="st-"], button, input, textarea, select {
+  font-family: var(--ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Los iconos de Streamlit son ligaduras de una fuente de iconos, y la regla de
+   arriba les cambia la familia: el navegador acaba imprimiendo el NOMBRE del
+   icono ("keyboard_arrow_right") en vez de dibujarlo. Devolverles la fuente
+   exige acertarle a su nombre exacto, que cambia entre versiones; se ocultan,
+   que es lo estable. El expander se abre igual al hacer clic en el renglón. */
+[data-testid="stIconMaterial"] { display: none !important; }
+
+.stApp { background: var(--papel); color: var(--tinta); }
+
+[data-testid="stMainBlockContainer"], .block-container {
+  padding-top: 1rem !important;
+  padding-bottom: 4rem !important;
+  max-width: 1240px;
+}
+
+/* La barra de Streamlit (Deploy, menú, estado) no es parte del producto */
+[data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"],
+#MainMenu, footer { display: none !important; }
+[data-testid="stHeader"] { background: transparent; height: 0; }
+
+/* --- Banda de marca ------------------------------------------------------ */
+
+.lis-banda {
+  background: var(--neg);
+  display: flex;
+  align-items: stretch;
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--oro);
+}
+
+.lis-banda__marca {
+  display: flex; align-items: center;
+  padding: .95rem 1.5rem;
+  border-right: 1px solid rgba(255,255,255,.14);
+}
+.lis-banda__marca img { height: 46px; width: auto; display: block; }
+
+.lis-banda__texto { padding: .95rem 1.5rem; display: flex; flex-direction: column; justify-content: center; }
+
+.lis-banda__titulo {
+  font-family: var(--display);
+  font-size: 1.4rem; font-weight: 500; font-optical-sizing: auto;
+  color: #fff; margin: 0; line-height: 1.1;
+}
+
+.lis-banda__sub {
+  font-family: var(--ui);
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: .26em;      /* el espaciado de "ACADEMIA DE MÚSICA" del logo */
+  text-transform: uppercase;
+  color: var(--oro); margin: .4rem 0 0 0;
+}
+
+/* --- Pestañas ------------------------------------------------------------ */
+
+[role="tablist"] {
+  border-bottom: 1px solid var(--regla) !important;
+  gap: 0 !important;
+  margin-bottom: 1.3rem !important;
+  flex-wrap: wrap;
+}
+
+[data-testid="stTab"] {
+  background: transparent !important;
+  padding: .55rem .58rem !important;
+  color: var(--tinta-3) !important;
+  font-family: var(--ui) !important;
+  font-size: .625rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .085em !important;
+  text-transform: uppercase !important;
+  border-bottom: 2px solid transparent !important;
+  margin-bottom: -1px;
+  transition: color .15s ease, border-color .15s ease;
+}
+
+[data-testid="stTab"]:hover { color: var(--tinta) !important; }
+
+[data-testid="stTab"][data-selected="true"] {
+  color: var(--tinta) !important;
+  border-bottom-color: var(--oro) !important;
+}
+
+[data-testid="stTab"] p { font-size: inherit !important; font-weight: inherit !important;
+  letter-spacing: inherit !important; text-transform: inherit !important; color: inherit !important; }
+
+/* --- Navegación (un radio disfrazado de pestañas) ------------------------- */
+
+[data-testid="stRadio"] > div[role="radiogroup"] {
+  gap: 0 !important;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--regla);
+  margin-bottom: 1.3rem;
+}
+
+[data-testid="stRadio"] label {
+  padding: .55rem .58rem !important;
+  margin: 0 !important;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+/* El circulito del radio sobra: aquí son pestañas.
+   Ojo con la estructura: el <span> que envuelve al <input> ya viene oculto por
+   Streamlit, y el círculo que se ve es un <div> anidado tres niveles adentro.
+   Apuntarle al <span> parece funcionar y no quita nada. */
+[data-testid="stRadioOption"] > div > div > div:first-child { display: none !important; }
+
+[data-testid="stRadio"] label p {
+  font-size: .625rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .085em !important;
+  text-transform: uppercase !important;
+  color: var(--tinta-3) !important;
+  margin: 0 !important;
+}
+
+[data-testid="stRadio"] label:hover p { color: var(--tinta) !important; }
+
+[data-testid="stRadio"] label:has(input:checked) { border-bottom-color: var(--oro); }
+[data-testid="stRadio"] label:has(input:checked) p { color: var(--tinta) !important; }
+
+/* --- Encabezado de tabla -------------------------------------------------- */
+
+.lis-enc { display: flex; align-items: flex-start; gap: .9rem; margin-bottom: 1.1rem; }
+
+.lis-enc__ic {
+  color: var(--lapiz); flex: 0 0 auto;
+  width: 38px; height: 38px; display: grid; place-items: center;
+  border: 1px solid var(--regla); border-radius: var(--r);
+  background: var(--superficie);
+}
+
+.lis-enc__n {
+  font-family: var(--display);
+  font-size: 1.3rem; font-weight: 600; color: var(--tinta);
+  margin: 0 0 .2rem 0; line-height: 1.15;
+}
+
+.lis-enc__d { font-size: .8rem; color: var(--tinta-2); margin: 0; line-height: 1.5; max-width: 70ch; }
+
+/* --- Insignias ----------------------------------------------------------- */
+
+.lis-ins {
+  display: inline-block; padding: .15rem .45rem;
+  font-family: var(--mono); font-size: .58rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  border-radius: 2px; margin-left: .4rem; vertical-align: middle;
+}
+.lis-ins--ed  { background: #FFF8E4; color: #7A5B00; border: 1px solid #F0DCA6; }
+.lis-ins--ro  { background: var(--lapiz-suave); color: var(--lapiz); border: 1px solid #EFD2D5; }
+.lis-ins--capa{ background: #F5F2ED; color: var(--tinta-3); border: 1px solid var(--regla); }
+
+/* --- SIGNATURA: el pentagrama como navegador ----------------------------- */
+
+.lis-staff { margin: 0; }
+.lis-staff svg { display: block; width: 100%; height: auto; }
+.lis-staff .linea  { stroke: #D6CFC2; stroke-width: 1; }
+.lis-staff .barra  { stroke: #C9C1B2; stroke-width: 1.4; }
+.lis-staff .compas { stroke: #EDE8DE; stroke-width: 1; }
+.lis-staff .vecino { fill: #CFC7B6; }
+.lis-staff .plica-vecina { stroke: #CFC7B6; stroke-width: 1.2; }
+.lis-staff .actual { fill: var(--lapiz); }
+.lis-staff .plica  { stroke: var(--lapiz); stroke-width: 1.5; }
+
+.lis-pos { text-align: center; margin-top: .35rem; }
+.lis-pos__n { font-family: var(--mono); font-size: 1.05rem; font-weight: 600; color: var(--tinta); letter-spacing: -.01em; }
+.lis-pos__n em { font-style: normal; color: var(--tinta-3); font-weight: 400; }
+.lis-pos__p { font-family: var(--ui); font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--tinta-3); margin-top: .15rem; }
+
+/* --- Tarjeta del registro ------------------------------------------------ */
+
+.lis-reg {
+  background: var(--superficie);
+  border: 1px solid var(--regla);
+  border-left: 3px solid var(--lapiz);
+  border-radius: var(--r);
+  padding: 1rem 1.2rem; margin: .9rem 0 1.1rem 0;
+}
+
+.lis-reg__k {
+  font-family: var(--mono); font-size: .68rem; font-weight: 500;
+  letter-spacing: .06em; color: var(--tinta-3); margin: 0 0 .25rem 0;
+}
+
+.lis-reg__t {
+  font-family: var(--display); font-size: 1.6rem; font-weight: 600;
+  font-optical-sizing: auto; color: var(--tinta); margin: 0; line-height: 1.18;
+}
+
+.lis-reg__p { font-size: .82rem; color: var(--tinta-2); margin: .4rem 0 0 0; }
+.lis-reg__p b { color: var(--tinta); font-weight: 600; }
+.lis-reg__p .num { font-family: var(--mono); font-size: .8rem; color: var(--tinta-2); }
+.lis-reg__p code { font-family: var(--mono); font-size: .78rem; background: #F5F2ED; padding: .05rem .3rem; border-radius: 2px; }
+
+/* --- Secciones ----------------------------------------------------------- */
+
+.lis-sec { display: flex; align-items: center; gap: .7rem; margin: 1.4rem 0 .1rem 0; }
+.lis-sec__t {
+  font-family: var(--ui); font-size: .6rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--lapiz); white-space: nowrap;
+}
+.lis-sec__l { height: 1px; background: var(--regla); flex: 1; }
+
+/* --- Controles ----------------------------------------------------------- */
+
+[data-testid="stWidgetLabel"] label p, .stTextInput label, .stSelectbox label,
+.stDateInput label, .stTextArea label, .stCheckbox label {
+  font-size: .62rem !important; font-weight: 600 !important;
+  letter-spacing: .1em !important; text-transform: uppercase !important;
+  color: var(--tinta-3) !important;
+}
+
+.stTextInput input, .stTextArea textarea, .stDateInput input {
+  border-radius: var(--r) !important;
+  border: 1px solid var(--regla) !important;
+  font-size: .85rem !important; color: var(--tinta) !important;
+  background: var(--superficie) !important;
+  padding: .42rem .6rem !important;
+}
+
+/* Identificadores, teléfonos y fechas en monoespaciada: se leen dígito a dígito */
+.stTextInput input[disabled], .stDateInput input { font-family: var(--mono) !important; font-size: .8rem !important; }
+
+.stTextInput input:focus, .stTextArea textarea:focus {
+  border-color: var(--lapiz) !important;
+  box-shadow: 0 0 0 2px var(--lapiz-suave) !important;
+}
+
+.stTextInput input:disabled {
+  background: #F7F5F1 !important; color: var(--tinta-3) !important;
+  -webkit-text-fill-color: var(--tinta-3); border-style: dashed !important;
+}
+
+[data-baseweb="select"] > div {
+  border-radius: var(--r) !important; border-color: var(--regla) !important;
+  font-size: .85rem !important; min-height: 36px !important;
+}
+
+/* --- Botones ------------------------------------------------------------- */
+
+.stButton > button, .stFormSubmitButton > button {
+  border-radius: var(--r); border: 1px solid var(--regla);
+  background: var(--superficie); color: var(--tinta-2);
+  font-weight: 600; font-size: .8rem; box-shadow: none;
+  transition: all .14s ease;
+}
+
+.stButton > button:hover:not(:disabled), .stFormSubmitButton > button:hover:not(:disabled) {
+  border-color: var(--lapiz); color: var(--lapiz); background: var(--lapiz-suave);
+}
+.stButton > button:disabled { opacity: .3; }
+
+[data-testid="stBaseButton-primaryFormSubmit"], .stButton > button[kind="primary"] {
+  background: var(--lapiz) !important; border-color: var(--lapiz) !important;
+  color: #fff !important; text-transform: uppercase;
+  letter-spacing: .12em; font-size: .68rem !important; font-weight: 600;
+}
+[data-testid="stBaseButton-primaryFormSubmit"]:hover:not(:disabled) {
+  background: var(--lapiz-h) !important; border-color: var(--lapiz-h) !important;
+}
+
+/* --- Formulario, avisos, expansores -------------------------------------- */
+
+[data-testid="stForm"] {
+  border: 1px solid var(--regla); border-radius: var(--r);
+  padding: .2rem 1.2rem 1.1rem 1.2rem; background: var(--superficie);
+}
+
+[data-testid="stAlert"] { border-radius: var(--r); font-size: .82rem; }
+
+/* Aviso propio: los de Streamlit vienen en azul de sistema y rompen la paleta */
+.lis-aviso {
+  background: #F6F3EE;
+  border: 1px solid var(--regla);
+  border-left: 3px solid var(--tinta-3);
+  border-radius: var(--r);
+  padding: .7rem .95rem;
+  font-size: .8rem; line-height: 1.55; color: var(--tinta-2);
+  margin-bottom: 1rem;
+}
+.lis-aviso b { color: var(--tinta); font-weight: 600; }
+.lis-aviso code { font-family: var(--mono); font-size: .75rem; background: #EDE8E0;
+  padding: .05rem .3rem; border-radius: 2px; }
+
+[data-testid="stExpander"] summary { color: var(--tinta-3); }
+[data-testid="stExpander"] summary p { font-size: .7rem !important; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; }
+/* El icono del expander es una ligadura de Material: si le cae text-transform,
+   el navegador imprime su nombre ("_arrow_right") en vez de dibujarlo. */
+[data-testid="stExpander"] summary svg,
+[data-testid="stExpander"] summary [data-testid="stIconMaterial"] {
+  text-transform: none !important; letter-spacing: normal !important; }
+[data-testid="stExpander"] details { border-color: var(--regla) !important; border-radius: var(--r); }
+
+/* --- El grafo ------------------------------------------------------------ */
+
+.lis-grafo { border: 1px solid var(--regla); border-radius: var(--r);
+  background: var(--superficie); overflow: hidden; }
+.lis-grafo svg { display: block; width: 100%; height: auto; }
+
+.lis-grafo .arista { fill: none; stroke: #E7E1D6; stroke-width: 1; }
+.lis-grafo .arista--viva { stroke: var(--lapiz); stroke-width: 1.6; }
+
+/* Cada nodo es una figura musical: cabeza (neuma), plica y corchete. */
+.lis-grafo .nodo { cursor: pointer; }
+.lis-grafo .blanco { fill: transparent; }
+.lis-grafo .nodo:hover .cabeza { stroke: var(--tinta); stroke-width: 2.4; }
+.lis-grafo .cabeza { stroke: #FFFFFF; stroke-width: 1.4; }
+.lis-grafo .cabeza--hueca { stroke-width: 2.6; }
+.lis-grafo .plica, .lis-grafo .corchete { fill: none; stroke-width: 1.8; stroke-linecap: round; }
+
+.lis-grafo .n--alumno      { fill: #B33844; }
+.lis-grafo .n--persona     { fill: #1F6FB2; }
+.lis-grafo .n--profesor    { fill: #D07AB8; }
+.lis-grafo .n--instrumento { fill: #A87200; }
+
+/* La cabeza hueca se dibuja con el color en el trazo, no en el relleno. */
+.lis-grafo .cabeza--hueca.n--profesor    { fill: #FFFFFF; stroke: #D07AB8; }
+.lis-grafo .cabeza--hueca.n--instrumento { fill: #FFFFFF; stroke: #A87200; }
+
+.lis-grafo .plica.n--alumno,   .lis-grafo .corchete.n--alumno   { stroke: #B33844; }
+.lis-grafo .plica.n--persona,  .lis-grafo .corchete.n--persona  { stroke: #1F6FB2; }
+.lis-grafo .plica.n--profesor, .lis-grafo .corchete.n--profesor { stroke: #D07AB8; }
+
+.lis-grafo .es--elegido.cabeza { stroke: var(--tinta); stroke-width: 3; }
+.lis-grafo .es--lejos { opacity: .2; }
+.lis-grafo a:focus-visible .cabeza { stroke: var(--tinta); stroke-width: 3; outline: none; }
+
+.lis-grafo .rotulo { font-family: var(--ui); font-size: 12px; font-weight: 600;
+  fill: var(--tinta); text-anchor: middle; pointer-events: none;
+  paint-order: stroke; stroke: #FFFFFF; stroke-width: 3.5; }
+
+.lis-leyenda { display: flex; align-items: center; gap: 1.05rem; flex-wrap: wrap;
+  margin: .2rem 0 .5rem 0; font-size: .74rem; color: var(--tinta-2); }
+.lis-leyenda__i { display: inline-flex; align-items: center; gap: .4rem; }
+.lis-leyenda__i svg { display: block; overflow: visible; }
+.lis-leyenda__n { color: var(--tinta-3); margin-left: auto;
+  font-variant-numeric: tabular-nums; }
+
+/* --- Horarios ------------------------------------------------------------ */
+
+.lis-semana { border: 1px solid var(--regla); border-radius: var(--r);
+  background: var(--superficie); padding: .5rem .2rem; margin: .3rem 0 .5rem 0; }
+.lis-semana svg { display: block; width: 100%; height: auto; }
+
+.lis-caja { width: 13px; height: 11px; display: inline-block; border-radius: 2px; }
+.lis-caja--disponible { background: #FDF3D4; border: 1.5px solid #D9A400; }
+.lis-caja--bloqueado  { background: #F8E5E7; border: 1.5px solid var(--lapiz); }
+.lis-caja--nada       { background: var(--superficie); border: 1px dashed var(--regla); }
+.lis-caja--alumnos    { background: repeating-linear-gradient(45deg,
+  #EFD8DC 0 3px, #FFFFFF 3px 6px); border: 1.2px dashed #C98490; }
+
+.lis-bloque { font-size: .85rem; margin: .1rem 0; padding: .45rem 0;
+  border-bottom: 1px solid var(--regla-2); }
+.lis-bloque b { font-weight: 600; }
+
+.lis-etiq { font-family: var(--mono); font-size: .6rem; letter-spacing: .06em;
+  text-transform: uppercase; padding: .1rem .4rem; border-radius: 2px; margin-left: .5rem; }
+.lis-etiq--disponible { background: #FDF3D4; color: #6B5000; border: 1px solid #EBCF7A; }
+.lis-etiq--bloqueado  { background: var(--lapiz-suave); color: var(--lapiz);
+  border: 1px solid #EFD2D5; }
+
+.lis-hueco { display: flex; align-items: baseline; gap: .8rem; flex-wrap: wrap;
+  padding: .55rem .8rem; border: 1px solid var(--regla); border-left: 3px solid var(--lapiz);
+  border-radius: var(--r); background: var(--superficie); margin-bottom: .4rem; }
+.lis-hueco__cuando { font-family: var(--display); font-size: 1.02rem; color: var(--tinta); }
+
+/* --- Ficha del nodo del grafo -------------------------------------------- */
+
+.lis-tabla { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.lis-tabla th {
+  text-align: left; font-weight: 600; color: var(--tinta-3);
+  font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+  padding: .45rem .8rem .45rem 0; white-space: nowrap; vertical-align: top;
+  border-bottom: 1px solid var(--regla-2); width: 38%;
+}
+.lis-tabla td {
+  padding: .45rem 0; color: var(--tinta); border-bottom: 1px solid var(--regla-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.lis-lista { list-style: none; padding: 0; margin: .3rem 0 0 0; font-size: .84rem; }
+.lis-lista li {
+  padding: .3rem 0; border-bottom: 1px solid var(--regla-2); color: var(--tinta);
+}
+.lis-porque { color: var(--tinta-3); font-size: .74rem; }
+
+/* --- Foco visible --------------------------------------------------------- */
+
+/* Sin un anillo de foco no se puede usar la pantalla con el teclado. Se usa
+   :focus-visible para que no salga al hacer clic con el ratón. */
+.stButton > button:focus-visible,
+.stFormSubmitButton > button:focus-visible,
+[data-testid="stTab"]:focus-visible,
+[data-baseweb="select"] > div:focus-within,
+.stTextInput input:focus-visible,
+.stTextArea textarea:focus-visible,
+.stDateInput input:focus-visible {
+  outline: 2px solid var(--lapiz);
+  outline-offset: 2px;
+  border-radius: var(--r);
+}
+
+/* --- Cifras -------------------------------------------------------------- */
+
+/* Cifras de ancho fijo: al pasar de registro, el contador no baila. */
+.lis-pos__n, .lis-reg__k, .lis-reg__p .num, .lis-ins,
+.stTextInput input, .stDateInput input { font-variant-numeric: tabular-nums; }
+
+/* --- Utilidades ---------------------------------------------------------- */
+
+.lis-ic { display: block; }
+.lis-nota { font-family: var(--ui); font-size: .74rem; color: var(--tinta-3); line-height: 1.5; margin: .3rem 0; }
+.lis-nota code { font-family: var(--mono); font-size: .72rem; }
+
+.lis-vacio { text-align: center; padding: 3.5rem 1rem; }
+.lis-vacio__ic { color: var(--regla); display: flex; justify-content: center; margin-bottom: .9rem; }
+.lis-vacio__t { font-family: var(--display); font-size: 1.15rem; color: var(--tinta-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
